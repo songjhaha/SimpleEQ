@@ -29,5 +29,11 @@ private:
     // access the processor object that created it.
     SimpleEQAudioProcessor& audioProcessor;
 
+    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
+
+    juce::Slider peakFreqSlider;
+    SliderAttachment peakFreqAttachment;
+
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleEQAudioProcessorEditor)
 };

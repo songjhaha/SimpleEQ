@@ -11,11 +11,15 @@
 
 //==============================================================================
 SimpleEQAudioProcessorEditor::SimpleEQAudioProcessorEditor (SimpleEQAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+    : AudioProcessorEditor (&p), audioProcessor (p),
+    peakFreqAttachment(audioProcessor.apvts, "Peak Freq", peakFreqSlider)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+
+    addAndMakeVisible(peakFreqSlider);
+    
+    setSize (400, 400);
 }
 
 SimpleEQAudioProcessorEditor::~SimpleEQAudioProcessorEditor()
@@ -37,4 +41,8 @@ void SimpleEQAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+    auto bounds = getLocalBounds();
+    auto topArean = bounds.removeFromTop(bounds.getHeight() * 0.25);
+
+    peakFreqSlider.setBounds(bounds.removeFromTop(bounds.getHeight() / 7.0));
 }
