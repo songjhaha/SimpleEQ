@@ -78,7 +78,7 @@ void SimpleEQAudioProcessorEditor::resized()
     //highCutSlopeComboBox.setBounds(SliderArean);
     //GenericAudioProcessorEditor.setBounds(bounds);
     //GenericAudioProcessorEditor.setCentreRelative(0.5f, 0.625f);
-    GenericAudioProcessorEditor.setBounds(20,100,400,300);
+    GenericAudioProcessorEditor.setBounds(bounds.getWidth()*0.05, topArean.getHeight(), bounds.getWidth(), bounds.getHeight());
 }
 
 std::vector<juce::Component*> SimpleEQAudioProcessorEditor::getComps()
