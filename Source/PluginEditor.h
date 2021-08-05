@@ -33,28 +33,31 @@ private:
     using ComboBoxAttachment = juce::AudioProcessorValueTreeState::ComboBoxAttachment;
 
 
-    juce::Slider peakFreqSlider,
-        peakGainSlider, peakQualitySlider,
-        lowCutFreqSlider, highCutFreqSlider;
+    //juce::Slider peakFreqSlider,
+    //    peakGainSlider, peakQualitySlider,
+    //    lowCutFreqSlider, highCutFreqSlider;
 
-    juce::ComboBox lowCutSlopeComboBox, highCutSlopeComboBox;
+    //juce::ComboBox lowCutSlopeComboBox, highCutSlopeComboBox;
 
-    juce::Label peakFreqLabel,
-        peakGainLabel, peakQualityLabel,
-        lowCutFreqLabel, highCutFreqLabel,
-        lowCutSlopeLabel, highCutSlopLabel;
+    //juce::Label peakFreqLabel,
+    //    peakGainLabel, peakQualityLabel,
+    //    lowCutFreqLabel, highCutFreqLabel,
+    //    lowCutSlopeLabel, highCutSlopLabel;
 
-    SliderAttachment peakFreqAttachment,
-        peakGainAttachment, peakQualityAttachment,
-        lowCutFreqAttachment, highCutFreqAttachment;
+    //SliderAttachment peakFreqAttachment,
+    //    peakGainAttachment, peakQualityAttachment,
+    //    lowCutFreqAttachment, highCutFreqAttachment;
 
-    ComboBoxAttachment lowCutSlopeAttachment, highCutSlopAttachment;
+    //ComboBoxAttachment lowCutSlopeAttachment, highCutSlopAttachment;
 
-    std::vector<juce::Component*> getComps();
+    //std::vector<juce::Component*> getComps();
 
-    void setLabelText();
+    //void setLabelText();
 
     juce::GenericAudioProcessorEditor GenericAudioProcessorEditor;
+
+    MonoChain monoChain;
+
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleEQAudioProcessorEditor)
