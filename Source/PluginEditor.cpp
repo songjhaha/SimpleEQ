@@ -33,12 +33,23 @@ SimpleEQAudioProcessorEditor::SimpleEQAudioProcessorEditor (SimpleEQAudioProcess
     //    addAndMakeVisible(comp);
     //}
 
+    const auto& params = audioProcessor.getParameters();
+    for (auto param : params)
+    {
+        param->addListener(this);
+    }
+    startTimerHz(60);
     
     setSize (400, 400);
 }
 
 SimpleEQAudioProcessorEditor::~SimpleEQAudioProcessorEditor()
 {
+    const auto& params = audioProcessor.getParameters();
+    for (auto param : params)
+    {
+        param->removeListener(this);
+    }
 }
 
 //==============================================================================
@@ -94,6 +105,7 @@ void SimpleEQAudioProcessorEditor::paint (juce::Graphics& g)
             mag *= highcut.get<3>().coefficients->getMagnitudeForFrequency(freq, sampleRate);
 
         mags[i] = Decibels::gainToDecibels(mag);
+    }
 
         Path responseCurve;
         const double outputMin = topArean.getBottom();
@@ -111,11 +123,10 @@ void SimpleEQAudioProcessorEditor::paint (juce::Graphics& g)
         }
 
         g.setColour(Colours::orange);
-        g.drawRoundedRectangle(topArean.toFloat(), 4.0f, 1.0f);
+        g.drawRoundedRectangle(topArean.toFloat(), 2.0f, 1.0f);
 
         g.setColour(Colours::white);
         g.strokePath(responseCurve, PathStrokeType(2.0f));
-    }
 }
 
 void SimpleEQAudioProcessorEditor::resized()
@@ -146,6 +157,38 @@ void SimpleEQAudioProcessorEditor::resized()
     //GenericAudioProcessorEditor.setCentreRelative(0.5f, 0.625f);
     GenericAudioProcessorEditor.setBounds(bounds.getWidth()*0.05, topArean.getHeight(), bounds.getWidth(), bounds.getHeight());
 }
+
+void SimpleEQAudioProcessorEditor::parameterValueChanged(int parameterIndex, float newValue)
+{
+    parametersChanged.set(true);
+}
+
+void SimpleEQAudioProcessorEditor::timerCallback()
+{
+    if (parametersChanged.compareAndSetBool(false, true))
+    {
+        auto chainSettings = getChainSetting(audioProcessor.apvts);
+        auto peakCoefficients = makePeakFilter(chainSettings, audioProcessor.getSampleRate());
+        updateCoefficients(monoChain.get<ChainPositions::Peak>().coefficients, peakCoefficients);
+
+        auto lowCutCoefficients = makeLowCutFilter(chainSettings, audioProcessor.getSampleRate());
+        auto highCutCoefficients = makeHighCutFilter(chainSettings, audioProcessor.getSampleRate());
+
+        updateCutFilter(monoChain.get<ChainPositions::LowCut>(),
+            lowCutCoefficients,
+            chainSettings.lowCutSlope);
+
+        updateCutFilter(monoChain.get<ChainPositions::HighCut>(),
+            highCutCoefficients,
+            chainSettings.highCutSlope);
+
+
+        repaint();
+    }
+}
+
+
+
 
 //std::vector<juce::Component*> SimpleEQAudioProcessorEditor::getComps()
 //{
@@ -178,3 +221,4 @@ void SimpleEQAudioProcessorEditor::resized()
 //    lowCutSlopeLabel.setText("LowCut Slope", juce::dontSendNotification);
 //    highCutSlopLabel.setText("HighCut Slope", juce::dontSendNotification);
 //}
+
