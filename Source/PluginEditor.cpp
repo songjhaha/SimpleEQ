@@ -20,7 +20,7 @@ ResponseCurveComponent::ResponseCurveComponent(SimpleEQAudioProcessor& p)
         param->addListener(this);
     }
 
-    leftChannelFFTDataGenerator.changeOrder(FFTOrder::order2048);
+    leftChannelFFTDataGenerator.changeOrder(FFTOrder::order4096);
     monoBuffer.setSize(1, leftChannelFFTDataGenerator.getFFTSize());
 
     startTimerHz(60);
@@ -61,7 +61,9 @@ void ResponseCurveComponent::timerCallback()
         }
     }
 
-    const auto fftBounds = getLocalBounds().toFloat();
+
+    auto bounds = getLocalBounds();
+    const auto fftBounds = bounds.removeFromTop(bounds.getHeight()*0.85).toFloat();
     const auto fftSize = leftChannelFFTDataGenerator.getFFTSize();
     const auto binWidth = audioProcessor.getSampleRate() / (double)fftSize;
 
