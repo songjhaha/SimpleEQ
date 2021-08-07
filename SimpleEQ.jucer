@@ -2,8 +2,8 @@
 
 <JUCERPROJECT id="EZDOME" name="SimpleEQ" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              cppLanguageStandard="17" pluginFormats="buildStandalone,buildVST3"
-              pluginVST3Category="EQ">
+              cppLanguageStandard="17" pluginFormats="buildVST3" pluginVST3Category="EQ"
+              pluginManufacturer="songjhhaha">
   <MAINGROUP id="IhCEvv" name="SimpleEQ">
     <GROUP id="{3E73427D-F1A1-868B-E61E-3BFD893BEF6C}" name="Source">
       <FILE id="oV44yG" name="PluginProcessor.cpp" compile="1" resource="0"
