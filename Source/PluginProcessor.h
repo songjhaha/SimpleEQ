@@ -189,7 +189,7 @@ inline auto makeHighCutFilter(const ChainSettings& chainSettings, double sampleR
 {
     return juce::dsp::FilterDesign<float>::designIIRLowpassHighOrderButterworthMethod(chainSettings.highCutFreq,
         sampleRate,
-        2 * (chainSettings.lowCutSlope + 1));
+        2 * (chainSettings.highCutSlope + 1));
 }
 
 template<int Index, typename ChainType, typename CoefficientType>
